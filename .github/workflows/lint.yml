@@ -48,4 +48,4 @@ jobs:
         uses: ansible/ansible-lint-action@master
         with:
           targets: .
-          # args: " -c "
+          args: "-c"
