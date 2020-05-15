@@ -35,7 +35,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Checkout lint rules
+        uses: actions/checkout@v2
+        with:
+          repository: lean-delivery/ansible-lint-rules
+          path: ansible-lint-rules
+
       - name: Ansible Lint
         uses: ansible/ansible-lint-action@master
         with:
           targets: .
+          args: "-c"
