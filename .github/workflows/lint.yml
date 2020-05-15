@@ -43,25 +43,7 @@ jobs:
 
 
       - name: Ansible Lint
-        uses: ansible/ansible-lint-action@master
+        uses: pavelpikta/ansible-lint-action@master
         with:
           targets: .
           args: "-c .ansible-lint"
-
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        scenario:
-          - default-2
-
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          path: "${{ github.repository }}"
-
-      - name: Molecule
-        uses: gofrolist/molecule-action@master
-        with:
-          molecule_args: --scenario-name ${{ matrix.scenario }}
