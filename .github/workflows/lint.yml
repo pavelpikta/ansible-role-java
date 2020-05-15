@@ -48,22 +48,20 @@ jobs:
           targets: .
           args: "-c .ansible-lint"
 
-  molecule:
-    name: Molecule
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - default-2
+
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Checkout ansible lint rules
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
-          repository: lean-delivery/ansible-lint-rules
-          path: ansible-lint-rules
+          path: "${{ github.repository }}"
 
       - name: Molecule
-        uses: robertdebock/molecule-action@2.2.0
+        uses: gofrolist/molecule-action@master
         with:
-          entrypoint: /usr/local/bin/molecule
-          args: cd ${GITHUB_REPOSITORY} ; test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
