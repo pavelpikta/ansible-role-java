@@ -66,4 +66,4 @@ jobs:
         uses: robertdebock/molecule-action@2.2.0
         with:
           entrypoint: /usr/local/bin/molecule
-          args: lint
+          args: test
