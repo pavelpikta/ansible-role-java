@@ -1,3 +1,4 @@
+---
 name: Lint
 
 on:
@@ -9,15 +10,33 @@ on:
 
 jobs:
   yamllint:
-    name: 'Yamllint'
+    name: Yamllint
     runs-on: ubuntu-latest
+
     steps:
-      - name: 'Checkout'
+
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: 'Yamllint'
+
+      - name: Yamllint
         uses: karancode/yamllint-github-action@master
         with:
           yamllint_file_or_dir: .
           yamllint_config_filepath: .yamllint
           yamllint_format: colored
-          yamllint_strict: false
+          yamllint_strict: true
+
+  ansible-lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Ansible Lint
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: .
+          args: -c
