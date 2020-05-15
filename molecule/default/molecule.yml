@@ -7,8 +7,8 @@ driver:
   name: docker
 lint: |
   set -e
-  yamllint -c .yamllint .
-  ansible-lint -c .ansible-lint . -v
+  yamllint -f colored -c .yamllint .
+  ansible-lint . -c .ansible-lint
 platforms:
   - name: test-docker-centos7-openjdk
     image: leandelivery/docker-systemd:centos7
