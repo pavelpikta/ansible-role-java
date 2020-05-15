@@ -24,7 +24,7 @@ jobs:
           yamllint_file_or_dir: .
           yamllint_config_filepath: .yamllint
           yamllint_format: colored
-          yamllint_strict: true
+          yamllint_strict: false #TODO: think about it (true/false)
 
   ansible-lint:
     name: Ansible Lint
@@ -34,15 +34,12 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        # with:
-        #   clean: false
 
-      - name: Checkout lint rules
+      - name: Checkout ansible lint rules
         uses: actions/checkout@v2
         with:
           repository: lean-delivery/ansible-lint-rules
           path: ansible-lint-rules
-          # clean: false
 
 
       - name: Ansible Lint
@@ -50,3 +47,20 @@ jobs:
         with:
           targets: .
           args: "-c .ansible-lint"
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    needs:
+      - yamllint
+      - ansible-lint
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout ansible lint rules
+        uses: actions/checkout@v2
+        with:
+          repository: lean-delivery/ansible-lint-rules
+          path: ansible-lint-rules
