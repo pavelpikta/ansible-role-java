@@ -60,18 +60,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: ${{ github.repository }}
-          # clean: false
+          clean: false
 
-      # - name: Checkout ansible lint rules
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: lean-delivery/ansible-lint-rules
-      #     path: ${{ github.repository }}/ansible-lint-rules
-      #     clean: false
+      - name: Checkout ansible lint rules
+        uses: actions/checkout@v2
+        with:
+          repository: lean-delivery/ansible-lint-rules
+          path: ${{ github.repository }}/ansible-lint-rules
+          clean: false
 
       - name: Molecule
         uses: gofrolist/molecule-action@master
         with:
           molecule_options: --debug
           molecule_command: test
-          molecule_args: --scenario-name default
+          molecule_args: --scenario-name default-2
