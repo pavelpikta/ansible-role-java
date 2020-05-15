@@ -58,12 +58,16 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: ${{ github.repository }}
+          clean: false
 
       - name: Checkout ansible lint rules
         uses: actions/checkout@v2
         with:
           repository: lean-delivery/ansible-lint-rules
-          path: ansible-lint-rules
+          path: ${{ github.repository }}/ansible-lint-rules
+          clean: false
 
       - name: Molecule
         uses: gofrolist/molecule-action@master
