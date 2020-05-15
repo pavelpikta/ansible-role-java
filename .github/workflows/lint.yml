@@ -1,0 +1,21 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+  release:
+    types:
+      - created
+
+jobs:
+  yamllint:
+    name: 'Yamllint'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+      - name: 'Yamllint'
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_config_filepath: .yamllint
+          yamllint_format: colored
