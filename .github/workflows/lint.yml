@@ -19,3 +19,4 @@ jobs:
         with:
           yamllint_config_filepath: .yamllint
           yamllint_format: colored
+          yamllint_strict: true
