@@ -8,7 +8,7 @@ driver:
 lint: |
   set -e
   yamllint -f colored -c .yamllint .
-  ansible-lint . -c .ansible-lint
+  ansible-lint -c .ansible-lint
 platforms:
   - name: test-docker-centos7-openjdk
     image: leandelivery/docker-systemd:centos7
@@ -39,13 +39,7 @@ provisioner:
       callback_whitelist: profile_tasks,timer
   playbooks:
     verify: ../resources/tests/verify.yml
-  lint: |
-    set -e
-    yamllint -c .yamllint .
 scenario:
   name: default
 verifier:
   name: ansible
-  lint: |
-    set -e
-    yamllint -c .yamllint .

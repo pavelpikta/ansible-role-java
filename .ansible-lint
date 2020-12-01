@@ -6,3 +6,6 @@ rulesdir:
 use_default_rules: true
 verbosity: 2
 quiet: false
+skip_list:
+  - '207'
+  - '208'
