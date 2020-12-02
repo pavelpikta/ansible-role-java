@@ -7,12 +7,17 @@ on:
   release:
     types:
       - created
+  workflow_run:
+    workflows: ["Lint"]
+    types:
+      - completed
+      - requested
+
 
 jobs:
   build:
     runs-on: ubuntu-20.04
     strategy:
-      max-parallel: 4
       matrix:
         scenario-name:
           - default
