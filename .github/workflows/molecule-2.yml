@@ -1,0 +1,48 @@
+---
+name: Molecule Test v2
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 4
+      matrix:
+        scenario-name:
+          - default
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.6
+
+      # - name: Install docker
+      #   uses: docker-practice/actions-setup-docker@master
+
+      # - name: Install dependencies
+      #   run: |
+      #     python3 -m pip install --upgrade pip
+      #     python3 -m pip install molecule
+      #     python3 -m pip install ansible ansible-lint molecule[docker]
+      #     ansible --version
+      #     ansible-lint --version
+      #     molecule --version
+
+      # - name: Test with molecule
+      #   run: |
+      #     molecule test -s ${{ matrix.scenario-name }}
+      #   env:
+      #     PY_COLORS: '1'
+      #     ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario-name }}
