@@ -1,6 +1,13 @@
 ---
 name: Molecule Test
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+  release:
+    types:
+      - created
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -14,27 +21,46 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
         with:
-          python-version: 3.6
+          path: "${{ github.repository }}"
 
-      - name: Install docker
-        uses: docker-practice/actions-setup-docker@master
+      # This option takes 2-3 minutes longer than using a ready-made action
 
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install molecule
-          python3 -m pip install ansible ansible-lint molecule[docker]
-          ansible --version
-          ansible-lint --version
-          molecule --version
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: 3.6
 
-      - name: Test with molecule
-        run: |
-          molecule test -s ${{ matrix.scenario-name }}
+      # - name: Install docker
+      #   uses: docker-practice/actions-setup-docker@master
+
+      # - name: Install dependencies
+      #   run: |
+      #     python3 -m pip install --upgrade pip
+      #     python3 -m pip install molecule
+      #     python3 -m pip install ansible ansible-lint molecule[docker]
+      #     ansible --version
+      #     ansible-lint --version
+      #     molecule --version
+
+      # - name: Test with molecule
+      #   run: |
+      #     molecule test -s ${{ matrix.scenario-name }}
+      #   env:
+      #     PY_COLORS: '1'
+      #     ANSIBLE_FORCE_COLOR: '1'
+
+      - name: Checkout ansible-lint rules
+        uses: actions/checkout@v2
+        with:
+          repository: lean-delivery/ansible-lint-rules
+          path: ansible-lint-rules
+
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2.0.1
+        with:
+          molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario-name }}
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
