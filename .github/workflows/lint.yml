@@ -26,24 +26,24 @@ jobs:
           yamllint_format: colored
           yamllint_strict: false #TODO: think about it (true/false)
 
-  ansible-lint:
-    name: Ansible Lint
-    runs-on: ubuntu-latest
+  # ansible-lint:
+  #   name: Ansible Lint
+  #   runs-on: ubuntu-latest
 
-    steps:
+  #   steps:
 
-      - name: Checkout
-        uses: actions/checkout@v2
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Checkout ansible lint rules
-        uses: actions/checkout@v2
-        with:
-          repository: lean-delivery/ansible-lint-rules
-          path: ansible-lint-rules
+  #     - name: Checkout ansible lint rules
+  #       uses: actions/checkout@v2
+  #       with:
+  #         repository: lean-delivery/ansible-lint-rules
+  #         path: ansible-lint-rules
 
 
-      - name: Ansible Lint
-        uses: pavelpikta/ansible-lint-action@master
-        with:
-          targets: .
-          args: "-c .ansible-lint"
+  #     - name: Ansible Lint
+  #       uses: pavelpikta/ansible-lint-action@master
+  #       with:
+  #         targets: .
+  #         args: "-c .ansible-lint"
